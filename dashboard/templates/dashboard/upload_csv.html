@@ -1,4 +1,6 @@
 {% load static %}
+
+<link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,78 +36,115 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h3>Dashboard</h3>
-        <a href="#">📊 데이터 업로드</a>
-        <a href="#">📈 차트 보기</a>
-        <a href="#">📋 리포트</a>
-        <a href="#">⚙ 설정</a>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3>Dashboard</h3>
+    <a href="#">📊 데이터 업로드</a>
+    <a href="#">📈 차트 보기</a>
+    <a href="#">📋 리포트</a>
+    <a href="#">⚙ 설정</a>
+</div>
+
+<!-- Main content -->
+<div class="main">
+    <h1>📊 마케팅 데이터 분석</h1>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="file" name="csv_file" accept=".csv" required>
+        </div>
+        {% if numeric_cols %}
+        <div class="mb-3">
+            <label for="selected_column" class="form-label">차트로 보고 싶은 컬럼 선택:</label>
+            <select name="selected_column" id="selected_column" class="form-select" required>
+                {% for col in numeric_cols %}
+                <option value="{{ col }}" {% if selected_column == col %}selected{% endif %}>{{ col }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">업로드 및 분석</button>
+    </form>
+
+
+    <!-- Data Preview Table -->
+    {% if table_html %}
+    <h2>업로드한 데이터 미리보기</h2>
+    <div class="table-scroll">
+    {{ table_html|safe }}
     </div>
 
-    <!-- Main content -->
-    <div class="main">
-        <h1>📊 마케팅 데이터 분석</h1>
+    {% endif %}
 
-        <!-- Upload Form -->
-        <form method="POST" enctype="multipart/form-data" class="mb-4">
-            {% csrf_token %}
-            <div class="mb-3">
-                <input type="file" name="csv_file" accept=".csv" required>
-            </div>
-            {% if numeric_cols %}
-            <div class="mb-3">
-                <label for="selected_column" class="form-label">차트로 보고 싶은 컬럼 선택:</label>
-                <select name="selected_column" id="selected_column" class="form-select" required>
-                    {% for col in numeric_cols %}
-                        <option value="{{ col }}" {% if selected_column == col %}selected{% endif %}>{{ col }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">업로드 및 분석</button>
-        </form>
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+            <h5 class="card-title">총 매출</h5>
+            <p class="card-text">₩ {{ total_sales }}</p>
+        </div>
+    </div>
 
-        <!-- Dashboard Cards -->
-<!--        <div class="row mb-4">-->
-<!--            <div class="col-md-4">-->
-<!--                <div class="card text-white bg-primary mb-3">-->
-<!--                    <div class="card-body">-->
-<!--                        <h5 class="card-title">총 매출</h5>-->
-<!--                        <p class="card-text">🚀 {{ stats_html|safe }}</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; 카드 추가 가능 &ndash;&gt;-->
-<!--        </div>-->
+    <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">총 클릭수</h5>
+            <p class="card-text">{{ total_clicks }}</p>
+        </div>
+    </div>
 
-         <!-- Data Preview Table -->
-        {% if table_html %}
-        <h2>업로드한 데이터 미리보기</h2>
-        <div>{{ table_html|safe }}</div>
-        {% endif %}
 
-        <!-- Charts -->
+    <div class="row">
         {% if chart_data %}
-        <h2>Bar Chart</h2>
-        <canvas id="myChart" width="400" height="200"></canvas>
-        <div id="chart-data" data-labels='{{ chart_labels|safe }}' data-data='{{ chart_data|safe }}'></div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    Bar Chart
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div id="chart-data" data-labels='{{ chart_labels|safe }}' data-data='{{ chart_data|safe }}'></div>
+                </div>
+            </div>
+        </div>
         {% endif %}
 
         {% if line_chart_data %}
-        <h2>Line Chart</h2>
-        <canvas id="lineChart" width="400" height="200"></canvas>
-        <div id="line-chart-data" data-labels='{{ line_chart_labels|safe }}' data-data='{{ line_chart_data|safe }}'></div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    Line Chart
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div id="line-chart-data" data-labels='{{ line_chart_labels|safe }}'
+                         data-data='{{ line_chart_data|safe }}'></div>
+                </div>
+            </div>
+        </div>
         {% endif %}
 
         {% if pie_chart_data %}
-        <h2>Pie Chart</h2>
-        <canvas id="pieChart" width="400" height="200"></canvas>
-        <div id="pie-chart-data" data-labels='{{ pie_chart_labels|safe }}' data-data='{{ pie_chart_data|safe }}'></div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    Pie Chart
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                    <div id="pie-chart-data" data-labels='{{ pie_chart_labels|safe }}'
+                         data-data='{{ pie_chart_data|safe }}'></div>
+                </div>
+            </div>
+        </div>
         {% endif %}
-
-
     </div>
+
 
     <!-- my_Chart.js 연결 -->
     <script src="{% static 'dashboard/js/my_Chart.js' %}"></script>

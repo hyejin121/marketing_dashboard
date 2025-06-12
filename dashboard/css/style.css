@@ -1,0 +1,41 @@
+/* 전체 body padding */
+body {
+    padding: 10px;
+}
+
+/* 차트 카드 내 차트 크기 고정 */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* 너비 제한 → 원하는 값 (필요 없으면 빼도 됨) */
+    height: 300px; /* 고정 높이 반드시 필요 → auto X */
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px; /* 오타 수정 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Canvas에 강제 고정 */
+.chart-container canvas {
+    display: block; /* ⭐ 매우 중요 */
+    width: 100% !important;
+    height: 100% !important; /* 반드시 100% 고정 → auto X */
+}
+
+/* Data Preview Table Scroll 적용 */
+.data-preview {
+    overflow-x: auto;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Table Scroll (호환용) */
+.table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+}

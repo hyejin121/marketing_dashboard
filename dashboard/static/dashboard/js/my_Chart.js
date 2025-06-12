@@ -25,9 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }]
             },
             options: {
+                responsive: false,   // ⭐ 꼭 false 적용!
+                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
+                resizeDelay: 0,
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                    beginAtZero: true
                     }
                 }
             }
@@ -54,9 +60,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }]
             },
             options: {
+                responsive: false,   // ⭐ 꼭 false 적용!
+                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
+                resizeDelay: 0,
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                    beginAtZero: true
                     }
                 }
             }
@@ -88,7 +100,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     borderWidth: 1
                 }]
             },
-            options: {}
+            options: {
+                responsive: false,   // ⭐ 꼭 false 적용!
+                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
+                resizeDelay: 0,
+                animation: {
+                    duration: 0
+                },
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+            }
         });
     }
 
@@ -138,9 +162,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             }]
                         },
                         options: {
+                            responsive: false,   // ⭐ 꼭 false 적용!
+                            maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
+                            resizeDelay: 0,
+                            animation: {
+                                duration: 0
+                            },
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                beginAtZero: true
                                 }
                             }
                         }
@@ -175,7 +205,14 @@ document.addEventListener('DOMContentLoaded', function () {
                                 borderWidth: 1
                             }]
                         },
-                        options: {}
+                        options: {
+                            responsive: false,   // ⭐ 꼭 false 적용!
+                            maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
+                            resizeDelay: 0,
+                            animation: {
+                                duration: 0
+                            }
+                        }
                     });
                 } else {
                     window.pieChart.data.labels = data.pie_chart_labels;

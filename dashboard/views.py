@@ -61,6 +61,8 @@ def upload_csv(request):
     line_chart_data = []
     pie_chart_labels = []
     pie_chart_data = []
+    total_sales = 0
+    total_clicks = 0
 
     selected_column = None
     numeric_cols = []   # 숫자형 컬럼 리스트
@@ -95,6 +97,10 @@ def upload_csv(request):
         # 예시 : 첫 번째 숫자형 컬럼을 막대 그래프로 표시
         numeric_cols = df.select_dtypes(include='number').columns.tolist()   # 숫자형 컬럼 목록
 
+        # 만약 컬럼에 '매출', '클릭수' 있으면 카드형태로 html 표시
+        total_sales = df['매출'].sum() if '매출' in df.columns else 0
+        total_clicks = df['클릭수'].sum() if '클릭수' in df.columns else 0
+
         # 차트 데이터 구성
         if selected_column and selected_column in df.columns:
             # Bar Chart / Line Chart / Pie Chart 모두 Selected_column 기준으로 구성
@@ -127,6 +133,8 @@ def upload_csv(request):
             'pie_chart_data':json.dumps(pie_chart_data),
             'numeric_cols':numeric_cols,    # 템플릿에 전달(드롭다운용)
             'selected_column':selected_column,  # 현재 선택된 컬럼명도 전달
+            'total_sales': total_sales,
+            'total_clicks': total_clicks,
         }
     )
 
