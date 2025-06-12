@@ -5,116 +5,100 @@ document.addEventListener('DOMContentLoaded', function () {
         return document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     }
 
+    // ✅ 초기 빈 데이터 구성
+    const emptyLabels = Array(5).fill('');
+    const emptyData = Array(5).fill(0);
+
     // ✅ 1️⃣ Bar Chart 초기 생성
     const chartDataElement = document.getElementById('chart-data');
-    if (chartDataElement) {
-        const chartLabels = JSON.parse(chartDataElement.dataset.labels);
-        const chartData = JSON.parse(chartDataElement.dataset.data);
-
-        const ctx = document.getElementById('myChart').getContext('2d');
-        window.myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: chartLabels,
-                datasets: [{
-                    label: '첫 번째 숫자형 컬럼',
-                    data: chartData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
+    const ctx = document.getElementById('myChart').getContext('2d');
+    window.myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartDataElement ? JSON.parse(chartDataElement.dataset.labels) : emptyLabels,
+            datasets: [{
+                label: '첫 번째 숫자형 컬럼',
+                data: chartDataElement ? JSON.parse(chartDataElement.dataset.data) : emptyData,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            resizeDelay: 0,
+            animation: {
+                duration: 0
             },
-            options: {
-                responsive: false,   // ⭐ 꼭 false 적용!
-                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
-                resizeDelay: 0,
-                animation: {
-                    duration: 0
-                },
-                scales: {
-                    y: {
+            scales: {
+                y: {
                     beginAtZero: true
-                    }
                 }
             }
-        });
-    }
+        }
+    });
 
     // ✅ 2️⃣ Line Chart 초기 생성
     const lineChartDataElement = document.getElementById('line-chart-data');
-    if (lineChartDataElement) {
-        const lineChartLabels = JSON.parse(lineChartDataElement.dataset.labels);
-        const lineChartData = JSON.parse(lineChartDataElement.dataset.data);
-
-        const lineCtx = document.getElementById('lineChart').getContext('2d');
-        window.lineChart = new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: lineChartLabels,
-                datasets: [{
-                    label: '첫 번째 숫자형 컬럼 (Line Chart)',
-                    data: lineChartData,
-                    fill: false,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    tension: 0.1
-                }]
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    window.lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: lineChartDataElement ? JSON.parse(lineChartDataElement.dataset.labels) : emptyLabels,
+            datasets: [{
+                label: '첫 번째 숫자형 컬럼 (Line Chart)',
+                data: lineChartDataElement ? JSON.parse(lineChartDataElement.dataset.data) : emptyData,
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            resizeDelay: 0,
+            animation: {
+                duration: 0
             },
-            options: {
-                responsive: false,   // ⭐ 꼭 false 적용!
-                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
-                resizeDelay: 0,
-                animation: {
-                    duration: 0
-                },
-                scales: {
-                    y: {
+            scales: {
+                y: {
                     beginAtZero: true
-                    }
                 }
             }
-        });
-    }
+        }
+    });
 
     // ✅ 3️⃣ Pie Chart 초기 생성
     const pieChartDataElement = document.getElementById('pie-chart-data');
-    if (pieChartDataElement) {
-        const pieChartLabels = JSON.parse(pieChartDataElement.dataset.labels);
-        const pieChartData = JSON.parse(pieChartDataElement.dataset.data);
-
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        window.pieChart = new Chart(pieCtx, {
-            type: 'pie',
-            data: {
-                labels: pieChartLabels,
-                datasets: [{
-                    label: '첫 번째 숫자형 컬럼 (Pie Chart)',
-                    data: pieChartData,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)'
-                    ],
-                    borderColor: 'rgba(255, 255, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: false,   // ⭐ 꼭 false 적용!
-                maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
-                resizeDelay: 0,
-                animation: {
-                    duration: 0
-                },
-                scales: {
-                    y: {
-                    beginAtZero: true
-                    }
-                }
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    window.pieChart = new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: pieChartDataElement ? JSON.parse(pieChartDataElement.dataset.labels) : emptyLabels,
+            datasets: [{
+                label: '첫 번째 숫자형 컬럼 (Pie Chart)',
+                data: pieChartDataElement ? JSON.parse(pieChartDataElement.dataset.data) : emptyData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)'
+                ],
+                borderColor: 'rgba(255, 255, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            resizeDelay: 0,
+            animation: {
+                duration: 0
             }
-        });
-    }
+        }
+    });
 
     // ✅ 4️⃣ 드롭다운 change 이벤트 → AJAX 요청
     const columnSelector = document.getElementById('selected_column');
@@ -131,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: formData
         })
         .then(response => {
-            if (!response.ok){
+            if (!response.ok) {
                 throw new Error('Server error');
             }
             return response.json();
@@ -144,81 +128,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 myChart.update();
             }
 
-            // ✅ Line Chart update (안전 패턴 적용)
-            const lineChartCanvas = document.getElementById('lineChart');
-            if (lineChartCanvas) {
-                const lineCtx = lineChartCanvas.getContext('2d');
-                if (!window.lineChart) {
-                    window.lineChart = new Chart(lineCtx, {
-                        type: 'line',
-                        data: {
-                            labels: data.line_chart_labels,
-                            datasets: [{
-                                label: '첫 번째 숫자형 컬럼 (Line Chart)',
-                                data: data.line_chart_data,
-                                fill: false,
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                tension: 0.1
-                            }]
-                        },
-                        options: {
-                            responsive: false,   // ⭐ 꼭 false 적용!
-                            maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
-                            resizeDelay: 0,
-                            animation: {
-                                duration: 0
-                            },
-                            scales: {
-                                y: {
-                                beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    window.lineChart.data.labels = data.line_chart_labels;
-                    window.lineChart.data.datasets[0].data = data.line_chart_data;
-                    window.lineChart.update();
-                }
+            // ✅ Line Chart update
+            if (window.lineChart) {
+                lineChart.data.labels = data.line_chart_labels;
+                lineChart.data.datasets[0].data = data.line_chart_data;
+                lineChart.update();
             }
 
-            // ✅ Pie Chart update (안전 패턴 적용)
-            const pieChartCanvas = document.getElementById('pieChart');
-            if (pieChartCanvas) {
-                const pieCtx = pieChartCanvas.getContext('2d');
-                if (!window.pieChart) {
-                    window.pieChart = new Chart(pieCtx, {
-                        type: 'pie',
-                        data: {
-                            labels: data.pie_chart_labels,
-                            datasets: [{
-                                label: '첫 번째 숫자형 컬럼 (Pie Chart)',
-                                data: data.pie_chart_data,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.5)',
-                                    'rgba(54, 162, 235, 0.5)',
-                                    'rgba(255, 206, 86, 0.5)',
-                                    'rgba(75, 192, 192, 0.5)',
-                                    'rgba(153, 102, 255, 0.5)'
-                                ],
-                                borderColor: 'rgba(255, 255, 255, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: false,   // ⭐ 꼭 false 적용!
-                            maintainAspectRatio: false,   // ⭐ 추가로 비율 고정 끄기
-                            resizeDelay: 0,
-                            animation: {
-                                duration: 0
-                            }
-                        }
-                    });
-                } else {
-                    window.pieChart.data.labels = data.pie_chart_labels;
-                    window.pieChart.data.datasets[0].data = data.pie_chart_data;
-                    window.pieChart.update();
-                }
+            // ✅ Pie Chart update
+            if (window.pieChart) {
+                pieChart.data.labels = data.pie_chart_labels;
+                pieChart.data.datasets[0].data = data.pie_chart_data;
+                pieChart.update();
             }
         })
         .catch(error => {
